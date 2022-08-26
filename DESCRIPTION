@@ -1,9 +1,12 @@
 Package: PNADc.table
 Title: PNADc data tabulation
 Version: 0.0.0.9000
-Authors@R: 
+Authors@R: c(
     person("Miguel", "Conforto", , "miguel.conforto1@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+           comment = c(ORCID = "YOUR-ORCID-ID")),
+    person("Cássio", "Almeida", , "cassiofpa@gmail.com"),
+    person("Sandra", "Canton", , "sandra.cardoso@ibge.gov.br")
+  )
 Description: Functions that return graphs and tables with already calculated PNADc data (mean, total and percentage).
 License: MIT + file LICENSE
 Encoding: UTF-8
