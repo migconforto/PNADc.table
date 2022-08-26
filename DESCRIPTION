@@ -25,3 +25,5 @@ Imports:
     utils,
     webshot
 VignetteBuilder: knitr
+URL: https://github.com/migux14/PNADc.table
+BugReports: https://github.com/migux14/PNADc.table/issues
