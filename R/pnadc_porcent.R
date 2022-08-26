@@ -16,6 +16,8 @@
 #' @importFrom gt tab_source_note
 #' @importFrom gt sub_missing
 #' @importFrom gt fmt_percent
+#' @importFrom utils write.csv2
+#' @importFrom gt gtsave
 #'
 #' @return gt table.
 #' @export

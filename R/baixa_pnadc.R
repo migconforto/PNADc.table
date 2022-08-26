@@ -12,6 +12,7 @@
 #' @examples pnadc_download(2019, 1)
 pnadc_download <- function(year, quartile, path = NULL) {
   webshot::install_phantomjs(force = T)
+  a <- webshot2::`%>%`(1,sum())
   if (is.null(path)) {
     if (file.exists(fs::path_home(paste("Design_PNADc", year, quartile, sep = "_"))) == T) {
       print("This edition of the PNADc has already been downloaded and can be used.")

@@ -15,6 +15,8 @@
 #' @importFrom gt tab_options
 #' @importFrom gt tab_source_note
 #' @importFrom gt sub_missing
+#' @importFrom utils write.csv2
+#' @importFrom gt gtsave
 #'
 #' @return gt table.
 #' @export

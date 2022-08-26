@@ -18,7 +18,9 @@
 #' @importFrom gt tab_options
 #' @importFrom gt tab_source_note
 #' @importFrom gt sub_missing
-#' @importFrom gt gt_save_webshot
+#' @importFrom utils write.csv2
+#' @importFrom gt gtsave
+#' @importFrom stats as.formula
 #'
 #' @return gt table
 #' @export
