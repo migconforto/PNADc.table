@@ -97,20 +97,6 @@ pnadc_tracks(~V403312, ~V2010, 2019, 1, calculation = "percentage", group = ~V20
 ```
 
 <div style="text-align: justify">
-Now let's **export** the previous tables to a pre-selected folder
-
-```{r}
-pnadc_tracks(~V403312, ~V2009+UF, 2019, 1, calculation = "percentage", path = "C:/Data_PNADc", group = ~V2009, cluster = c(0, 100, 5), export = "pdf" )
-#As the path has been selected, the function will download and create the design directly in the chosen directory
-#The export option chosen was in .pdf
-#The table will be exported to the location C:\Data_PNADc in .pdf format
-
-pnadc_tracks(~V403312, ~V2010, 2019, 1, calculation = "percentage", path = "C:/Data_PNADc", group = ~V2010, cluster = list("Negra" = c("Preta","Parda"), "Outras" = c("Amarela","Indígena","Ignorado")), export = "csv")
-# The export option chosen was in .csv
-#The table will be exported to the location C:\Data_PNADc in .csv format
-```
-
-<div style="text-align: justify">
 If the objective is to create a **Data Frame in R**, the user must assign it to an object, that is, an object will be created in the R environment and it will receive the final result of the function.
 <br/>Although it sounds strange, this task is actually quite simple. Let's take the previous example to create the Data Frame
 
@@ -118,13 +104,6 @@ If the objective is to create a **Data Frame in R**, the user must assign it to 
 table_pnadc_2019_1 <- pnadc_tracks(~V403312, ~V2009+UF, 2019, 1, calculation = "percentage", path = "C:/PNADc_Data", group = ~V2009, cluster = c(0, 100, 5), export = "df")
 #As "df" was selected in the "export" argument, the function will return a Data Frame.
 #We assign to the object "table_pnadc_2019_1" the Data Frame of the function, in this way it will be saved so it can be used later. view(table_pnadc_2019_1)
-```
-
-<div style="text-align: justify">
-Some general examples of how the function can be used:
-
-```{r}
-pnadc_tracks(~V403312, ~V2009+UF, 2019, 1, calculation = "total", group = ~V2009, cluster = c(0, 100, 5))
 ```
 
 # NOTE:

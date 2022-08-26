@@ -86,12 +86,10 @@ pnadc_graph(~V403312, ~UF+V2007, 2019, 1, calculation = "mean", classifier = "V4
 <div style="text-align: justify">
   The information from these graphs together with the tables of the _pnadc_mean_ function bring a clearer view of the differences in income between men and women and facilitate a comparison.
 
-<br/> Now let's export the previous tables. To do so, just use the **export** argument and select one of the formats between "pdf" and "png".
+<br/> Now let's export the previous tables. To do so, just use the **export** argument.
 ```{r}
 pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312", export = "pdf")
 #Export the graph in .pdf format to the user's default directory.
-pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312", export = "png")
-#Export the graphic in .png format to the user's default directory.
 ```
 <div style="text-align: justify">
   The directory where the graphic is saved can be chosen through the **path** argument.
@@ -99,9 +97,7 @@ pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312"
 
 ```{r}
 pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", path = "C:/Data_PNADc", classifier = "V403312", export = "pdf")
-#Export the graph in .pdf format to the user's default directory.
-pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", path = "C:/Data_PNADc", classifier = "V403312", export = "png")
-#Export the graphic in .png format to the user's default directory.
+#Export the graph in .pdf format to directory /Data_PNADc
 ```
 
 <div style="text-align: justify">
@@ -157,10 +153,6 @@ pnadc_graph(~V403312, ~V2010, 2019, 1, calculation = "percentage", classifier = 
 pnadc_graph(~V403312, ~V2010+V2007, 2019, 1, calculation = "total", classifier = "V2007", type = 1)
 #It is worth mentioning that changing the classifier changes the visualization of the chart
 #The order in which the filter is placed also changes the graph
-```
-
-```{r}
-pnadc_graph(~V403312, ~V2007+V2010, 2019, 1, calculation = "total", classifier = "V2010", type = 1)
 ```
 
 ### NOTE:

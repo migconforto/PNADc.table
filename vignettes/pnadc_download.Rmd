@@ -49,7 +49,7 @@ pnadc_download(2019, 1)
 
 Now if we want to download the data in a specific folder on the computer, we would have to specify the path as follows:
 
-```{r}
+```r
 pnadc_download(2019, 1, path = 'C:/PNAD_2019')
 #This way the design will be saved on disk C in the folder 'PNAD 2019'
 #NOTE: The location must be written with '/' or '\\' and never with '\'
@@ -57,7 +57,8 @@ pnadc_download(2019, 1, path = 'C:/PNAD_2019')
 
 If it is of interest to read the general data of the sample in R, the following steps must be taken:
 
-```{r}
+``` r
+pnadc_download(2019,3, path = 'C:/PNAD_2019')
 #Load the Design file that was created on the computer.
 #For this you need to use the load() function and specify the location and name of the file.
 #Using the previous example load() would be as follows:
