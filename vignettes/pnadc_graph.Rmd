@@ -16,6 +16,7 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(PNADc.table)
+library(PNADcIBGE)
 ```
 
 # What is it for?
