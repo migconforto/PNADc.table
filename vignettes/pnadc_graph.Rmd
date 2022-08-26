@@ -1,0 +1,167 @@
+---
+title: "pnadc_graph"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pnadc_graph}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(PNADc.table)
+```
+
+# What is it for?
+<div style="text-align: justify">
+  The _pnadc_graph_ function is used to create **graphs** and export them in png, html and pdf formats.
+  
+# arguments
+<div style="text-align: justify">
+* **Variable**:
+<br/> Feature of interest that will be used for the calculation and creation of the graph. It must be a numeric variable and be written as a formula (~ in front of the variable). Non-numeric/empty remarks are disregarded.
+
+* **Filter**:
+<br/> Variable that defines the aggregation level of the variable of interest. It can contain more than one level of aggregation and must be categorical. It also needs to be written as a formula.
+
+* **Year**:
+<br/> Year you want to analyze. Must be a number between 2012 and the current year. Does not accept a vector of years. If the chosen edition has not yet been downloaded, the _pnadc_download_ function will be called automatically and create a design in the desired location.
+
+* **Quartile**:
+<br/> Quartile of the year you want to analyze. Must be a number between 1 and 4. It does not accept a vector of quartiles.
+
+* **Calculation**:
+<br/> calculation you want to do. Must be one of: average, total and percentageage. It must come between "". It does not accept a list of calculations.
+
+* **Classifier**:
+<br/> One of the variables that were used in the 'variable' or 'filter' parameter that will serve as a filter classifier in the legend and graph. It must come between "".
+
+* **Path**:
+<br/> Location/directory where you want to save the final table. If you have already used the _pnadc_download_ function to create the design in a specific path, just use the logical value True (T). If a path is not chosen, the table will be saved in the user folder on the local hard disk.
+
+* **Export**:
+<br/> export the graphic to "pdf" and "png" formats. If it has not been filled, it returns a ggplot2 graphic in R space. It must be a string and be enclosed in "".
+
+* **Type**:
+<br/> type of graph you want to generate. 1 for Bar Graph and 2 for Dot Graph. Does not accept an array of types.
+
+# What does the function return?
+<div style="text-align: justify">
+  The function returns a **ggplot graphic** within the R environment if the **export option is not filled**. If the export argument is filled with one of the other options, the function will create a file directly in the informed directory.
+  
+# Examples
+<div style="text-align: justify">
+  In this example we are going to create a bar graph of the average monthly gross income (V403312) separated by federation unit (UF) from 2019.1 calculation, assuming that the user did not use the _pnadc_download_ function to download the files and also does not want to export the graph.
+  
+```{r}
+pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312")
+#The calculation we want to do is "mean"
+#Must be written strictly this way and without accents
+#The chosen classifier was the monthly gross income variable (V403312)
+#As the "type" argument was not defined, the function will make a bar graph
+```
+<div style="text-align: justify">
+  Now let's add the variable Sexo (V2007) next to the UF and make a **classification by sex**:
+
+```{r}
+pnadc_graph(~V403312, ~UF+V2007, 2019, 1, calculation = "mean", classifier = "V2007")
+#The generated graph will be a bar graph too
+#The Gender classifier (V2007) will show us the differences between the gross income of each Gender
+```
+
+<div style="text-align: justify">
+  Also in the previous graph, it is possible to use the Gross Income variable (V403312) as a classifier, however the visualization will not be so clear. Watch:
+  
+```{r}
+pnadc_graph(~V403312, ~UF+V2007, 2019, 1, calculation = "mean", classifier = "V403312")
+```
+
+<div style="text-align: justify">
+  The information from these graphs together with the tables of the _pnadc_mean_ function bring a clearer view of the differences in income between men and women and facilitate a comparison.
+
+<br/> Now let's export the previous tables. To do so, just use the **export** argument and select one of the formats between "pdf" and "png".
+```{r}
+pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312", export = "pdf")
+#Export the graph in .pdf format to the user's default directory.
+pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312", export = "png")
+#Export the graphic in .png format to the user's default directory.
+```
+<div style="text-align: justify">
+  The directory where the graphic is saved can be chosen through the **path** argument.
+<br/>See the following example:
+
+```{r}
+pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", path = "C:/Data_PNADc", classifier = "V403312", export = "pdf")
+#Export the graph in .pdf format to the user's default directory.
+pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", path = "C:/Data_PNADc", classifier = "V403312", export = "png")
+#Export the graphic in .png format to the user's default directory.
+```
+
+<div style="text-align: justify">
+  Let's redo the previous charts, but now in **dot charts**:
+```{r}
+pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "media", classifier = "V403312", type = 2)
+#Using the argument "type = 2" the graph that returns is the dot graph instead of the bar graph.
+```
+
+  
+```{r}
+pnadc_graph(~V403312, ~UF+V2007, 2019, 1, calculation = "media", classifier = "V2007", type = 2)
+#Previous chart using Gender (V2007) as classifier.
+```
+<div style="text-align: justify">
+  Now let's suppose we want to graph the **total** and **percentageage** of Gross Income (V403312) by Sex (V2007) and/or Race (V2010).
+<br/> Starting with the bar graphs:
+
+```{r}
+pnadc_graph(~V403312, ~V2007, 2019, 1, calculation = "total", classifier = "V2007")
+#Gross Income Graph (V403312) x Gender (V2007)
+#The argument "calculation = 'total'" returns a graph containing the totals of the variable Gross Income (V403312)
+#As the "export" argument was not selected, the graph will be generated in R environment
+```
+
+```{r}
+pnadc_graph(~V403312, ~V2010, 2019, 1, calculation = "percentage", classifier = "V403312")
+#Gross Income Graph (V403312) x Race (V2010)
+#The argument "calculation = 'percentageage'" returns a graph that contains the percentageages of the variable Gross Income (V403312)
+#As the "export" argument was not selected, the graph will be generated in R environment
+```
+<div style="text-align: justify">
+  And now we will make the dot plots:
+
+```{r}
+pnadc_graph(~V403312, ~V2007, 2019, 1, calculation = "total", classifier = "V403312", type = 2)
+#Gross Income Graph (V403312) x Gender (V2007)
+#The argument "calculation = 'total'" returns a graph containing the totals of the variable Gross Income (V403312)
+#As the "export" argument was not selected, the graph will be generated in R environment
+```
+
+```{r}
+pnadc_graph(~V403312, ~V2010, 2019, 1, calculation = "percentage", classifier = "V403312", type = 2)
+#Gross Income Graph (V403312) x Race (V2010)
+#The argument "calculation = 'percentageage'" returns a graph that contains the percentageages of the variable Gross Income (V403312)
+#As the "export" argument was not selected, the graph will be generated in R environment
+```
+
+<div style="text-align: justify">
+  We can join the two variables to facilitate the analysis. So the "filter" argument would be:
+  
+```{r}
+pnadc_graph(~V403312, ~V2010+V2007, 2019, 1, calculation = "total", classifier = "V2007", type = 1)
+#It is worth mentioning that changing the classifier changes the visualization of the chart
+#The order in which the filter is placed also changes the graph
+```
+
+```{r}
+pnadc_graph(~V403312, ~V2007+V2010, 2019, 1, calculation = "total", classifier = "V2010", type = 1)
+```
+
+### NOTE:
+<div style="text-align: justify">
+Code execution will be faster or slower depending on the **processing speed** of the computer and the amount of **RAM** available.
