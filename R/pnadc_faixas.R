@@ -18,6 +18,7 @@
 #' @importFrom gt tab_options
 #' @importFrom gt tab_source_note
 #' @importFrom gt sub_missing
+#' @importFrom gt gt_save_webshot
 #'
 #' @return gt table
 #' @export
