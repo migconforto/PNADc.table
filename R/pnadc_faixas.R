@@ -72,7 +72,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -145,7 +145,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -218,7 +218,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
           tabela <- as.data.frame(tabela)
 
@@ -315,7 +315,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -388,7 +388,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -461,7 +461,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
           tabela <- as.data.frame(tabela)
 
@@ -576,7 +576,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -649,7 +649,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -722,7 +722,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
           tabela <- as.data.frame(tabela)
 
@@ -818,7 +818,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -891,7 +891,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
 
@@ -965,7 +965,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
           tabela <- as.data.frame(tabela)
 
@@ -1084,7 +1084,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -1157,7 +1157,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -1230,7 +1230,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
           tabela <- as.data.frame(tabela)
 
@@ -1328,7 +1328,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -1401,7 +1401,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -1474,7 +1474,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
           tabela <- as.data.frame(tabela)
 
@@ -1596,7 +1596,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
           }
 
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
 
@@ -1670,7 +1670,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -1743,7 +1743,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
           tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
           tabela <- as.data.frame(tabela)
 
@@ -1840,7 +1840,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.by = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -1913,7 +1913,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.by = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T)
           tabela <- as.data.frame(tabela)
 
 
@@ -1987,7 +1987,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.by = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T)
           tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
           tabela <- as.data.frame(tabela)
 
