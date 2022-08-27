@@ -13,7 +13,7 @@
 #'
 #' @export
 #'
-#' @examples pnadc_download(2019, 1)
+#' @examples pnadc_download(2018, 1)
 pnadc_download <- function(year, quartile, path = NULL) {
   a <- webshot2::`%>%`(1,sum())
   attachNamespace("PNADcIBGE")
