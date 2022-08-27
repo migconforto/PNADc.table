@@ -16,6 +16,7 @@
 #' @examples pnadc_download(2019, 1)
 pnadc_download <- function(year, quartile, path = NULL) {
   a <- webshot2::`%>%`(1,sum())
+  attachNamespace("PNADcIBGE")
   if (is.null(path)) {
     if (file.exists(fs::path_home(paste("Design_PNADc", year, quartile, sep = "_"))) == T) {
       print("This edition of the PNADc has already been downloaded and can be used.")
@@ -25,7 +26,6 @@ pnadc_download <- function(year, quartile, path = NULL) {
 
       file <- paste("Design_PNADc", year, quartile, sep = "_")
       save(design_PNADc, file = fs::path_home(file))
-      utils::globalVariables('design_PNADc', package = 'PNADc.table')
     }
   }
   else {
@@ -33,7 +33,6 @@ pnadc_download <- function(year, quartile, path = NULL) {
       print("This edition of the PNADc has already been downloaded and can be used.")
 
       save(path, file = fs::path_home(paste("path_PNADcTABLE", year, quartile, sep = "_")))
-      utils::globalVariables('design_PNADc', package = 'PNADc.table')
     }
     else {
       if (file.exists(paste(path, "/PNADC_0", quartile, year, ".txt", sep = "")) == T) {
@@ -45,7 +44,6 @@ pnadc_download <- function(year, quartile, path = NULL) {
         path <- paste(path, "/Design_PNADc_", year, "_", quartile, sep = "")
         save(design_PNADc, file = path)
         save(path, file = fs::path_home(paste("path_PNADcTABLE", year, quartile, sep = "_")))
-        utils::globalVariables('design_PNADc', package = 'PNADc.table')
       }
       else {
         design_PNADc <- PNADcIBGE::get_pnadc(year, quarter = quartile, design = T)
@@ -53,7 +51,6 @@ pnadc_download <- function(year, quartile, path = NULL) {
         path <- paste(path, "/Design_PNADc_", year, "_", quartile, sep = "")
         save(design_PNADc, file = path)
         save(path, file = fs::path_home(paste("path_PNADcTABLE", year, quartile, sep = "_")))
-        utils::globalVariables('design_PNADc', package = 'PNADc.table')
       }
     }
   }
