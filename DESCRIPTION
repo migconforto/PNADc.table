@@ -3,7 +3,6 @@ Title: PNADc data tabulation
 Version: 1.0.0
 Authors@R: c(
     person("Miguel", "Conforto", , "miguel.conforto1@gmail.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID")),
     person("Cássio", "Almeida", , "cassiofpa@gmail.com", role = c("aut")),
     person("Sandra", "Canton", , "sandra.cardoso@ibge.gov.br", role = c("aut"))
   )
