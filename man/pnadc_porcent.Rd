@@ -26,6 +26,5 @@ gt table.
 Create PNADc percent tables
 }
 \examples{
-pnadc_porcent(~V403312, ~UF+V2007, 2018, 2)
-#Export the table to the user's default directory in .csv format
+pnadc_porcent(~V403312, ~UF+V2007, 2019, 1)
 }

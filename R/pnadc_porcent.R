@@ -22,8 +22,7 @@
 #' @return gt table.
 #' @export
 #'
-#' @examples pnadc_porcent(~V403312, ~UF+V2007, 2018, 2)
-#' #Export the table to the user's default directory in .csv format
+#' @examples pnadc_porcent(~V403312, ~UF+V2007, 2019, 1)
 pnadc_porcent <- function(variable, filter, year, quartile, path = F, export = F) {
   design_PNADc <- NULL
   if (path == F) {
