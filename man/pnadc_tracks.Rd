@@ -29,7 +29,7 @@ pnadc_tracks(
 
 \item{group}{Variable used to group a set of data. It must be one of the variables listed in the "filter". Must be a formula, that is, have ~ in front of the variable.}
 
-\item{cluster}{How the grouping strip will be made. In the numerical case it must be a vector calculationining the minimum, maximum and size of the range. In the categorical case it must be a list calculationining the old names and the new name that will replace them.}
+\item{cluster}{How the grouping strip will be made. In the numerical case it must be a vector calculation the minimum, maximum and size of the range. In the categorical case it must be a list calculation the old names and the new name that will replace them.}
 
 \item{path}{Path to the directory where the Design was created through the function "pnadc_download". It only accepts logical values True or False.}
 

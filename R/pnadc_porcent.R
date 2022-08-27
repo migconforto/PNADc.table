@@ -1,5 +1,5 @@
-# PNADc porcentagem -------------------------------------------------------
-#' Porcentagem PNADc
+# PNADc porcent -------------------------------------------------------
+#' porcent PNADc
 #'
 #' @description Create PNADc percent tables
 #'
@@ -98,10 +98,10 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = F, export = F
         return(tabela)
       }
       if (export == "csv") {
-        utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_porcentagem_", year, "_", quartile,".csv", sep = ""), col.names = T)
+        utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_porcent_", year, "_", quartile,".csv", sep = ""), col.names = T)
         print(paste("Saved in directory: ",fs::path_home(), sep = ""))
       } else {
-        gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcentagem_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
+        gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcent_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
         print(paste("Saved in directory: ",fs::path_home(), sep = ""))
       }
 
@@ -182,10 +182,10 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = F, export = F
         return(tabela)
       }
       if (export == "csv") {
-        utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_porcentagem_", year, "_", quartile,".csv", sep = ""), col.names = T)
+        utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_porcent_", year, "_", quartile,".csv", sep = ""), col.names = T)
         print(paste("Saved in directory: ",fs::path_home(), sep = ""))
       } else {
-        gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcentagem_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
+        gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcent_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
         print(paste("Saved in directory: ",fs::path_home(), sep = ""))
       }
 
@@ -269,10 +269,10 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = F, export = F
         return(tabela)
       }
       if (export == "csv") {
-        utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_porcentagem_", year, "_", quartile,".csv", sep = ""), col.names = T)
+        utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_porcent_", year, "_", quartile,".csv", sep = ""), col.names = T)
         print(paste("Saved in directory: ", path, sep = ""))
       } else {
-        gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcentagem_", year, "_", quartile,".", export, sep = ""), path = path)
+        gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcent_", year, "_", quartile,".", export, sep = ""), path = path)
         print(paste("Saved in directory: ", path, sep = ""))
       }
 
@@ -358,10 +358,10 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = F, export = F
         return(tabela)
       }
       if (export == "csv") {
-        utils::write.csv2(tabela , file = paste(path, "/Tabela_pnadc_porcentagem_", year, "_", quartile,".csv", sep = ""), col.names = T)
+        utils::write.csv2(tabela , file = paste(path, "/Tabela_pnadc_porcent_", year, "_", quartile,".csv", sep = ""), col.names = T)
         print(paste("Saved in directory: ", path, sep = ""))
       } else {
-        gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcentagem_", year, "_", quartile,".", export, sep = ""), path = path)
+        gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcent_", year, "_", quartile,".", export, sep = ""), path = path)
         print(paste("Saved in directory: ", path, sep = ""))
       }
 

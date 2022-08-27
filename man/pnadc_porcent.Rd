@@ -2,7 +2,7 @@
 % Please edit documentation in R/pnadc_porcent.R
 \name{pnadc_porcent}
 \alias{pnadc_porcent}
-\title{Porcentagem PNADc}
+\title{porcent PNADc}
 \usage{
 pnadc_porcent(variable, filter, year, quartile, path = F, export = F)
 }

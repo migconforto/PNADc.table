@@ -4,7 +4,7 @@
 #' @description Creates PNADc bar or dot graphics
 #'
 #' @param variable Variable of interest that will be used to calculate the Total. It can be a vector of variables.
-#' @param filter Variable that defines the aggregation level of the variable of interest. It can cotain more than one level of aggregation.
+#' @param filter Variable that defines the aggregation level of the variable of interest. It can contain more than one level of aggregation.
 #' @param year The year you want to review. Must be a number between 2012 and the current year. It does not accept a vector of years.
 #' @param quartile The quartile of the year you want to analyze. Must be a number between 1 and 4. It does not accept an array of quartiles.
 #' @param calculation calculation what you want to do. Must be mean, total or percentage and come between "". It does not accept a list of calculations.

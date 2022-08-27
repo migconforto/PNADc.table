@@ -19,7 +19,7 @@ pnadc_graph(
 \arguments{
 \item{variable}{Variable of interest that will be used to calculate the Total. It can be a vector of variables.}
 
-\item{filter}{Variable that defines the aggregation level of the variable of interest. It can cotain more than one level of aggregation.}
+\item{filter}{Variable that defines the aggregation level of the variable of interest. It can contain more than one level of aggregation.}
 
 \item{year}{The year you want to review. Must be a number between 2012 and the current year. It does not accept a vector of years.}
 
