@@ -2,10 +2,10 @@ Package: PNADc.table
 Title: PNADc data tabulation
 Version: 0.0.0.9000
 Authors@R: c(
-    person("Miguel", "Conforto", , "miguel.conforto1@gmail.com", role = c("aut", "cre"),
+    person("Miguel", "Conforto", , "miguel.conforto1@gmail.com", role = c("aut", "cre", "Graduating in statistics"),
            comment = c(ORCID = "YOUR-ORCID-ID")),
-    person("Cássio", "Almeida", , "cassiofpa@gmail.com"),
-    person("Sandra", "Canton", , "sandra.cardoso@ibge.gov.br")
+    person("Cássio", "Almeida", , "cassiofpa@gmail.com", role = c("co-aut", "Lecturer at the National School of Statistical Sciences")),
+    person("Sandra", "Canton", , "sandra.cardoso@ibge.gov.br", role = c("co-aut", "Lecturer at the National School of Statistical Sciences"))
   )
 Description: Functions that return graphs and tables with already calculated PNADc data (mean, total and percentage).
 License: MIT + file LICENSE

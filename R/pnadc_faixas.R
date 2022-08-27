@@ -30,7 +30,8 @@
 #' pnadc_tracks(~V403312, ~V2010, 2019, 1, calculation = "mean", group = ~V2010,
 #' cluster = list('Negra' = c('Preta', 'Parda'), 'Outros' = c('Amarela', 'Indigena')))
 #' #For numbers
-#' pnadc_tracks(~V403312, ~V2009, 2019, 1, calculation = "mean", group = ~V2009, cluster = c(0, 100, 5))
+#' pnadc_tracks(~V403312, ~V2009, 2019, 1, calculation = "mean",
+#' group = ~V2009, cluster = c(0, 100, 5))
 #'
 pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, cluster, path = F, export = F) {
   design_PNADc <- NULL
