@@ -1,6 +1,6 @@
 Package: PNADc.table
 Title: PNADc data tabulation
-Version: 0.0.0.9000
+Version: 1.0.0
 Authors@R: c(
     person("Miguel", "Conforto", , "miguel.conforto1@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "YOUR-ORCID-ID")),
