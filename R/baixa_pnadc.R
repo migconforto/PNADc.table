@@ -7,11 +7,14 @@
 #' @param quartile The quartile of the year you want to download. Must be a number between 1 and 4. It does not accept a vector of quartiles.
 #' @param path Path of the local directory where the PNAD files are or where you want to save the data. If it does not exist, a new directory will be created.
 #'
+#' @importFrom PNADcIBGE get_pnadc
+#' @importFrom PNADcIBGE read_pnadc
+#' @importFrom PNADcIBGE pnadc_design
+#'
 #' @export
 #'
 #' @examples pnadc_download(2019, 1)
 pnadc_download <- function(year, quartile, path = NULL) {
-  webshot::install_phantomjs(force = T)
   a <- webshot2::`%>%`(1,sum())
   if (is.null(path)) {
     if (file.exists(fs::path_home(paste("Design_PNADc", year, quartile, sep = "_"))) == T) {
