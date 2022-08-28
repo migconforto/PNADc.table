@@ -1,0 +1,112 @@
+---
+title: "pnadc_porcent"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pnadc_porcent}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(PNADc.table)
+library(PNADcIBGE)
+```
+
+# What is it for?
+<div style="text-align: justify">
+The _pnadc_porcent_ function is used to create **percentage tables** and export them in csv (Excel), html, pdf formats and also create a Data Frame in R environment.
+
+# arguments
+<div style="text-align: justify">
+* **Variable**:
+Feature of interest that will be used to calculate the percentage. It must be a numeric variable and be written as a formula (~ in front of the variable). Non-numeric/empty remarks are disregarded.
+
+* **Filter**:
+Variable that defines the aggregation level of the variable of interest. It can contain more than one level of aggregation and must be categorical. It also needs to be written as a formula.
+
+* **Year**:
+Year you want to analyze. Must be a number between 2012 and the current year. It does not accept a vector of years. If the chosen edition has not yet been downloaded, the _pnadc_download_ function will be called automatically and create a design in the desired location.
+
+* **Quartile**:
+Quartile of the year you want to analyze. Must be a number between 1 and 4. It does not accept a vector of quartiles.
+
+* **path**:
+Location/directory where you want to save the final table. If you have already used the _pnadc_download_ function to create the design in a specific path, just use the logical value True (T). If a path is not chosen, the table will be saved in the user folder on the local hard disk.
+
+* **export**:
+Format in which you want to export the generated table. It can export to "html", "pdf", "png" and "csv". If you want to return a data frame in R space, use "df". If it has not been filled, it returns a gt_table in R space. It must be a string (come between " ").
+
+# What does the function return?
+<div style="text-align: justify">
+The function returns a **gt table** within the R environment if the **export option is not filled**. If the export argument is filled with one of the other options, the function will create a file directly in the informed directory.
+
+# Examples
+<div style="text-align: justify">
+In this example, we are going to create a table of the percentage of monthly gross income (V403312) separated by federation unit (UF) for 2019.1, provided that the user did not use the _pnadc_download_ function to download the files and also does not want to export the table.
+
+```{r}
+#The Gross Yield variable must be called by the dictionary code and preceded by ~
+# The same goes for the federation unit.
+#As the user has not previously downloaded the PNADc version, it will be downloaded automatically when executing the code and will be saved on the local disk.
+
+pnadc_porcent(~V403312, ~UF, 2019, 1)
+
+#By not selecting any form of export, the table is returned within R.
+```
+
+<div style="text-align: justify">
+Still in this table, it is possible to add one more level of disaggregation, that is, one more variable acting as a filter.
+Let's add the variable Color or Race (V2010) as a filter next to the federation unit (UF)
+
+```{r}
+# Just "add" the variable Color or Race (V2010) to the federation unit (UF)
+
+pnadc_porcent(~V403312, ~UF+V2010, 2019, 1)
+
+#NOTE: The order in which the filter formula is made influences the final table, that is, the ~UF+V2010 filter is different from the ~V2010+UF filter
+```
+
+<div style="text-align: justify">
+Now, if the _pnadc_download_ function has been used to download the PNADc and create the design in a specific directory, the function would use the **path** argument:
+
+```{r}
+pnadc_download(2018, 2, path = "C:/PNADc_Data")
+
+#Using the pnadc_download function to download and create a design in the "Dados_PNADc" folder.
+
+pnadc_porcent(~V403312, ~UF, 2018, 2, path = T)
+
+#As the path has already been specified by the pnadc_download function, just put the logical value True in the path argument of the pnadc_porcent function.
+```
+
+<div style="text-align: justify">
+You can also select the directory you want to download and create the design directly in the _pnadc_porcent_ function as follows:
+
+```{r}
+pnadc_porcent(~V403312, ~UF, 2018, 2, path = "C:/Dados_PNADc")
+
+# So the pnadc_download function does not need to be executed and the percentage table is created inside the chosen folder.
+```
+
+<div style="text-align: justify">
+If the objective is to create a **Data Frame in R**, the user must assign it to an object, that is, an object will be created in the R environment and it will receive the final result of the function.
+<br/>Although it sounds strange, this task is actually quite simple. Let's take the previous example to create the Data Frame
+
+```{r}
+table_percent_pnadc_2018_2 <- pnadc_porcent(~V403312, ~UF, 2018, 2, path = "C:/Dados_PNADc", export = "df")
+
+#As "df" was selected in the "export" argument, the function will return a Data Frame.
+#We assign the function's Data Frame to the "table_percent_pnadc_2018_2" object, so it will be saved so it can be used later. View(table_percent_pnadc_2018_2)
+#The resulting Data Frame preview.
+```
+
+# NOTE:
+<div style="text-align: justify">
+Code execution will be faster or slower depending on the **processing speed** of the computer and the amount of **RAM** available.

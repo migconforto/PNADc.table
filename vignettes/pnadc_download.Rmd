@@ -1,0 +1,71 @@
+---
+title: "pnadc_download"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pnadc_download}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(PNADc.table)
+library(PNADcIBGE)
+```
+
+# What is it for?
+<div style="text-align: justify">
+  The _pnadc_download_ function is intended to **download survey data*, *create and save** a **_survey design_** within the user's computer. The download is done directly from the [PNADc website](https://ftp.ibge.gov.br/Trabalho_e_Rendimento/Pesquisa_Nacional_por_Amostra_de_Domicilios_continua/Trimestral/Microdados/) and because of that the function can only be executed if there is an internet connection and the [IBGE's official FTP](https://ftp.ibge.gov.br/) needs to be on the air as well.
+
+# arguments
+<div style="text-align: justify">
+* **Year**:
+<br/> The year you want to download. Must be a number between 2012 and the current year. Does not accept a vector of years. All other functions will ask for Year as an argument
+* **Quartile**:
+<br/> The quartile of the year you want to download. Must be a number between 1 and 4. Does not accept a vector of quartiles. All other functions will ask for Quartile as an argument
+* **Path**:
+<br/> Path of the local directory where the PNADc files are or where you want to save the Design. If no path is chosen, the data will be created on the local disk in the user folder on the local hard disk.
+
+# What does the function return?
+<div style="text-align: justify">
+The function **does not** return any object in R environment. It saves the design file **directly on the computer** and the other functions will call this file to execute the accounts. It should also be clear that the function will **not** show the .csv and .txt files downloaded to the computer, **only the design file**. Access to general information on the PNADc can be done within R by manually loading the design (see examples).
+
+# Examples
+<div style="text-align: justify">
+Let's say we want to make a table with the data from the first quartile of 2019 (2019.1)
+
+```{r}
+pnadc_download(2019, 1)
+# As no path option was selected, the function will save the Design on the user's local disk with the name of "Design_PNADc_2019_1".
+#All designs follow the same naming pattern: 'Design_PNADc_year_quartile'
+#It is important not to change the name of the design for other functions to find it later.
+```
+
+Now if we want to download the data in a specific folder on the computer, we would have to specify the path as follows:
+
+```r
+pnadc_download(2019, 1, path = 'C:/PNAD_2019')
+#This way the design will be saved on disk C in the folder 'PNAD 2019'
+#NOTE: The location must be written with '/' or '\\' and never with '\'
+```
+
+If it is of interest to read the general data of the sample in R, the following steps must be taken:
+
+``` r
+pnadc_download(2019,3, path = 'C:/PNAD_2019')
+#Load the Design file that was created on the computer.
+#For this you need to use the load() function and specify the location and name of the file.
+#Using the previous example load() would be as follows:
+load('C:/PNAD_2019/Design_PNADc_2019_3')
+# An object in R environment called 'design_PNADc' would be loaded.
+# To obtain access to general data, the following command could be used
+data <- design_PNADc$variables
+#the 'data' object will be a data frame containing all PNADc observations.
+```
+
