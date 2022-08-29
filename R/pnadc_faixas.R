@@ -2,6 +2,8 @@
 #' pnadc_tracks
 #'
 #' @description Regroups a numeric or non-numeric variable from the PNADc
+#' @description [Documentation in English](https://github.com/migux14/PNADc.table/tree/main/vignettes)
+#' @description [Documentation in Portuguese - BR](https://github.com/migux14/PNADc.table/tree/main/Documents%20PT-BR)
 #'
 #' @param variable Variable of interest that will be used to calculate the data. It must be a formula, that is, have ~ in front of the variable.
 #' @param filter Variable that defines the aggregation level of the variable of interest. It can contain more than one level of aggregation. It must be a formula, i.e. have ~ in front of the variable.
@@ -27,27 +29,26 @@
 #'
 #' @examples
 #' #For characters
-#' pnadc_tracks(~V403312, ~V2010, 2019, 1, calculation = "mean", group = ~V2010,
-#' cluster = list('Negra' = c('Preta', 'Parda'), 'Outros' = c('Amarela', 'Indigena')))
+#' \donttest{pnadc_tracks(~V403312, ~V2010, 2019, 1, calculation = "mean", group = ~V2010,
+#' cluster = list('Negra' = c('Preta', 'Parda'), 'Outros' = c('Amarela', 'Indigena')))}
 #' #For numbers
-#' pnadc_tracks(~V403312, ~V2009, 2019, 1, calculation = "mean",
-#' group = ~V2009, cluster = c(0, 100, 5))
-#'
-pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, cluster, path = F, export = F) {
+#' \donttest{pnadc_tracks(~V403312, ~V2009, 2019, 1, calculation = "mean",
+#' group = ~V2009, cluster = c(0, 100, 5))}
+pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, cluster, path = FALSE, export = FALSE) {
   design_PNADc <- NULL
   var <- as.character(variable)
   grp <- as.character(group)
   fil <- as.character(filter)
   fil <- unlist(strsplit(fil, split = " "))
 
-  if (path == F) {
-    if (file.exists(fs::path_home(paste("Design","PNADc", year, quartile, sep = "_"))) == T) {
+  if (path == FALSE) {
+    if (file.exists(fs::path_home(paste("Design","PNADc", year, quartile, sep = "_"))) == TRUE) {
       Design <- paste("Design","PNADc", year, quartile, sep = "_")
       load(fs::path_home(Design))
 
       grp_tip <- design_PNADc$variables[, grp[2]]
 
-      if (is.null(levels(grp_tip)) == F) {
+      if (is.null(levels(grp_tip)) == FALSE) {
         grp_sub <- as.character(grp_tip)
         for (h in 1:length(cluster)) {
           aux <- as.data.frame(cluster[h])
@@ -76,7 +77,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -117,7 +118,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "general average")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
@@ -125,10 +126,10 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
           }
           if (export == "csv") {
             utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_mean-faixa_", year, "_", quartile,".csv", sep = ""))
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_pnadc_mean-faixa_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           }
 
         }
@@ -149,7 +150,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -190,7 +191,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "Grand total")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
@@ -198,10 +199,10 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
           }
           if (export == "csv") {
             utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_total-faixa_", year, "_", quartile,".csv", sep = ""))
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_pnadc_total-faixa_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           }
 
         }
@@ -222,8 +223,8 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
-          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
+          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
           tabela <- as.data.frame(tabela)
 
           tabela <- as.data.frame(tabela)
@@ -280,18 +281,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
               )
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_porcentagem_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_porcentagem_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcentagem_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           }
 
         }
@@ -300,7 +301,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
 
       } else {
 
-        faixa <- cut(grp_tip, c(seq(cluster[1], cluster[2] , by = cluster[3]), max(grp_tip)), include.lowest = T, right = F)
+        faixa <- cut(grp_tip, c(seq(cluster[1], cluster[2] , by = cluster[3]), max(grp_tip)), include.lowest = TRUE, right = FALSE)
 
         if (calculation == "mean") {
           if (length(fil) > 3) {
@@ -319,7 +320,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -360,7 +361,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "general average")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
@@ -368,10 +369,10 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
           }
           if (export == "csv") {
             utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_mean-faixa_", year, "_", quartile,".csv", sep = ""))
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_pnadc_mean-faixa_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           }
 
         }
@@ -392,7 +393,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -433,7 +434,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "Grand total")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
@@ -441,10 +442,10 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
           }
           if (export == "csv") {
             utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_total-faixa_", year, "_", quartile,".csv", sep = ""))
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_pnadc_total-faixa_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           }
 
         }
@@ -465,8 +466,8 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
-          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
+          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
           tabela <- as.data.frame(tabela)
 
           tabela <- as.data.frame(tabela)
@@ -523,18 +524,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
               )
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_porcentagem_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_porcentagem_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcentagem_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           }
         }
 
@@ -549,7 +550,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
 
       grp_tip <- design_PNADc$variables[, grp[2]]
 
-      if (is.null(levels(grp_tip)) == F) {
+      if (is.null(levels(grp_tip)) == FALSE) {
         grp_sub <- as.character(grp_tip)
 
         for (h in 1:length(cluster)) {
@@ -580,7 +581,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -621,7 +622,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "general average")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
@@ -629,10 +630,10 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
           }
           if (export == "csv") {
             utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_mean-faixa_", year, "_", quartile,".csv", sep = ""))
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_pnadc_mean-faixa_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           }
 
         }
@@ -653,7 +654,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -694,7 +695,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "Grand total")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
@@ -702,10 +703,10 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
           }
           if (export == "csv") {
             utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_total-faixa_", year, "_", quartile,".csv", sep = ""))
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_pnadc_total-faixa_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           }
 
         }
@@ -726,8 +727,8 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
-          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
+          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
           tabela <- as.data.frame(tabela)
 
           tabela <- as.data.frame(tabela)
@@ -784,18 +785,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
               )
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_porcentagem_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_porcentagem_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcentagem_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           }
         }
 
@@ -803,7 +804,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
 
       } else {
 
-        faixa <- cut(grp_tip, c(seq(cluster[1], cluster[2] , by = cluster[3]), max(grp_tip)), include.lowest = T, right = F)
+        faixa <- cut(grp_tip, c(seq(cluster[1], cluster[2] , by = cluster[3]), max(grp_tip)), include.lowest = TRUE, right = FALSE)
 
         if (calculation == "mean") {
           if (length(fil) > 3) {
@@ -822,7 +823,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -863,7 +864,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "general average")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
@@ -871,10 +872,10 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
           }
           if (export == "csv") {
             utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_mean-faixa_", year, "_", quartile,".csv", sep = ""))
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_pnadc_mean-faixa_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           }
 
         }
@@ -895,7 +896,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
 
@@ -937,7 +938,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "Grand total")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
@@ -945,10 +946,10 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
           }
           if (export == "csv") {
             utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_total-faixa_", year, "_", quartile,".csv", sep = ""))
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_pnadc_total-faixa_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           }
 
         }
@@ -969,8 +970,8 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
-          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
+          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
           tabela <- as.data.frame(tabela)
 
           tabela <- as.data.frame(tabela)
@@ -1027,18 +1028,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
               )
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_porcentagem-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            utils::write.csv2(tabela, file = paste(fs::path_home(),"/Tabela_pnadc_porcentagem-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcentagem-faixa_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-            print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+            message(paste("Saved in directory: ",fs::path_home(), sep = ""))
           }
 
         }
@@ -1050,14 +1051,14 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
   } else {
     path_file <- fs::path_home(paste("path_PNADcTABLE", year, quartile, sep = "_"))
 
-    if (file.exists(path_file) == T) {
+    if (file.exists(path_file) == TRUE) {
       load(path_file)
       local_file <- paste(path, "/Design_PNADc_", year, "_", quartile, sep = "")
       load(local_file)
 
       grp_tip <- design_PNADc$variables[, grp[2]]
 
-      if (is.null(levels(grp_tip)) == F) {
+      if (is.null(levels(grp_tip)) == FALSE) {
         grp_sub <- as.character(grp_tip)
 
         for (h in 1:length(cluster)) {
@@ -1088,7 +1089,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -1129,18 +1130,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "general average")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_mean-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ", path, sep = ""))
+            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_mean-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ", path, sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_mean-faixa_", year, "_", quartile,".", export, sep = ""), path = path)
-            print(paste("Saved in directory: ", path, sep = ""))
+            message(paste("Saved in directory: ", path, sep = ""))
           }
 
         }
@@ -1161,7 +1162,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -1202,18 +1203,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "Grand total")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_total-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ", path, sep = ""))
+            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_total-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ", path, sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_total-faixa_", year, "_", quartile,".", export, sep = ""), path = path)
-            print(paste("Saved in directory: ", path, sep = ""))
+            message(paste("Saved in directory: ", path, sep = ""))
           }
 
         }
@@ -1234,8 +1235,8 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
-          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
+          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
           tabela <- as.data.frame(tabela)
 
           tabela <- as.data.frame(tabela)
@@ -1292,18 +1293,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
               )
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_porcentagem-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ", path, sep = ""))
+            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_porcentagem-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ", path, sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcentagem-faixa_", year, "_", quartile,".", export, sep = ""), path = path)
-            print(paste("Saved in directory: ", path, sep = ""))
+            message(paste("Saved in directory: ", path, sep = ""))
           }
 
 
@@ -1313,7 +1314,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
 
       } else {
 
-        faixa <- cut(grp_tip, c(seq(cluster[1], cluster[2] , by = cluster[3]), max(grp_tip)), include.lowest = T, right = F)
+        faixa <- cut(grp_tip, c(seq(cluster[1], cluster[2] , by = cluster[3]), max(grp_tip)), include.lowest = TRUE, right = FALSE)
 
         if (calculation == "mean") {
           if (length(fil) > 3) {
@@ -1332,7 +1333,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -1373,18 +1374,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "general average")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_mean-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ", path, sep = ""))
+            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_mean-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ", path, sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_mean-faixa_", year, "_", quartile,".", export, sep = ""), path = path)
-            print(paste("Saved in directory: ", path, sep = ""))
+            message(paste("Saved in directory: ", path, sep = ""))
           }
 
         }
@@ -1405,7 +1406,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -1446,18 +1447,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "Grand total")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_total-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ", path, sep = ""))
+            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_total-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ", path, sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_total-faixa_", year, "_", quartile,".", export, sep = ""), path = path)
-            print(paste("Saved in directory: ", path, sep = ""))
+            message(paste("Saved in directory: ", path, sep = ""))
           }
 
         }
@@ -1478,8 +1479,8 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
-          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
+          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
           tabela <- as.data.frame(tabela)
 
           tabela <- as.data.frame(tabela)
@@ -1536,18 +1537,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
               )
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_porcentagem-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ", path, sep = ""))
+            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_porcentagem-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ", path, sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcentagem-faixa_", year, "_", quartile,".", export, sep = ""), path = path)
-            print(paste("Saved in directory: ", path, sep = ""))
+            message(paste("Saved in directory: ", path, sep = ""))
           }
 
         }
@@ -1556,7 +1557,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
 
       }
     } else {
-      if (file.exists(fs::path_home(paste("Design","PNADc", year, quartile, sep = "_"))) == T) {
+      if (file.exists(fs::path_home(paste("Design","PNADc", year, quartile, sep = "_"))) == TRUE) {
         Design <- paste("Design","PNADc", year, quartile, sep = "_")
         load(fs::path_home(Design))
       } else {
@@ -1568,7 +1569,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
 
       grp_tip <- design_PNADc$variables[, grp[2]]
 
-      if (is.null(levels(grp_tip)) == F) {
+      if (is.null(levels(grp_tip)) == FALSE) {
         grp_sub <- as.character(grp_tip)
 
         for (h in 1:length(cluster)) {
@@ -1600,7 +1601,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
           }
 
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
 
@@ -1642,18 +1643,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "general average")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_mean-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ", path, sep = ""))
+            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_mean-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ", path, sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_mean-faixa_", year, "_", quartile,".", export, sep = ""), path = path)
-            print(paste("Saved in directory: ", path, sep = ""))
+            message(paste("Saved in directory: ", path, sep = ""))
           }
 
         }
@@ -1674,7 +1675,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -1715,18 +1716,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "Grand total")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_total-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ", path, sep = ""))
+            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_total-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ", path, sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_total-faixa_", year, "_", quartile,".", export, sep = ""), path = path)
-            print(paste("Saved in directory: ", path, sep = ""))
+            message(paste("Saved in directory: ", path, sep = ""))
           }
 
         }
@@ -1747,8 +1748,8 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$grp_sub
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.all = T)
-          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.all = TRUE)
+          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
           tabela <- as.data.frame(tabela)
 
           tabela <- as.data.frame(tabela)
@@ -1805,18 +1806,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
               )
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_porcentagem-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ", path, sep = ""))
+            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_porcentagem-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ", path, sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcentagem-faixa_", year, "_", quartile,".", export, sep = ""), path = path)
-            print(paste("Saved in directory: ", path, sep = ""))
+            message(paste("Saved in directory: ", path, sep = ""))
           }
 
         }
@@ -1825,7 +1826,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
 
       } else {
 
-        faixa <- cut(grp_tip, c(seq(cluster[1], cluster[2] , by = cluster[3]), max(grp_tip)), include.lowest = T, right = F)
+        faixa <- cut(grp_tip, c(seq(cluster[1], cluster[2] , by = cluster[3]), max(grp_tip)), include.lowest = TRUE, right = FALSE)
 
         if (calculation == "mean") {
           if (length(fil) > 3) {
@@ -1844,7 +1845,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = T, na.rm.all = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svymean, na.rm = TRUE, na.rm.all = TRUE)
           tabela <- as.data.frame(tabela)
 
           if (length(fil) > 3) {
@@ -1885,18 +1886,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "general average")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_mean-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ", path, sep = ""))
+            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_mean-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ", path, sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_mean-faixa_", year, "_", quartile,".", export, sep = ""), path = path)
-            print(paste("Saved in directory: ", path, sep = ""))
+            message(paste("Saved in directory: ", path, sep = ""))
           }
 
         }
@@ -1917,7 +1918,7 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE)
           tabela <- as.data.frame(tabela)
 
 
@@ -1959,18 +1960,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
                 missing_text = "Grand total")
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_total-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ", path, sep = ""))
+            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_total-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ", path, sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_total-faixa_", year, "_", quartile,".", export, sep = ""), path = path)
-            print(paste("Saved in directory: ", path, sep = ""))
+            message(paste("Saved in directory: ", path, sep = ""))
           }
 
         }
@@ -1991,8 +1992,8 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
             frml <- formula_1$faixa
           }
 
-          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = T)
-          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
+          tabela <- survey::svyby(formula = variable, by = frml , design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE)
+          tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
           tabela <- as.data.frame(tabela)
 
           tabela <- as.data.frame(tabela)
@@ -2049,18 +2050,18 @@ pnadc_tracks <- function(variable, filter, year, quartile, calculation, group, c
               )
           }
 
-          if (export == F) {
+          if (export == FALSE) {
             return(tabela_final)
           }
           if (export == "df") {
             return(tabela)
           }
           if (export == "csv") {
-            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_porcentagem-faixa_", year, "_", quartile,".csv", sep = ""), col.names = T)
-            print(paste("Saved in directory: ", path, sep = ""))
+            utils::write.csv2(tabela, file = paste(path, "/Tabela_pnadc_porcentagem-faixa_", year, "_", quartile,".csv", sep = ""), col.names = TRUE)
+            message(paste("Saved in directory: ", path, sep = ""))
           } else {
             gt::gtsave(tabela_final, filename = paste("Tabela_PNADcTABLE_porcentagem-faixa_", year, "_", quartile,".", export, sep = ""), path = path)
-            print(paste("Saved in directory: ", path, sep = ""))
+            message(paste("Saved in directory: ", path, sep = ""))
           }
 
         }

@@ -13,9 +13,17 @@ pnadc_download(year, quartile, path = NULL)
 
 \item{path}{Path of the local directory where the PNAD files are or where you want to save the data. If it does not exist, a new directory will be created.}
 }
+\value{
+No return value
+}
 \description{
-download the PNADc version and create a design directly on the computer.
+download the PNADc version and create a survey design directly on your computer. Saves an external representation of an object in \R that will be read later in other functions of PNADc.table
+
+\href{https://github.com/migux14/PNADc.table/tree/main/vignettes}{Documentation in English}
+
+\href{https://github.com/migux14/PNADc.table/tree/main/Documents\%20PT-BR}{Documentation in Portuguese - BR}
 }
 \examples{
-pnadc_download(2018, 1)
+\donttest{pnadc_download(2018, 1)}
+#A file named "Design_PNADc_2018_1" will be created directly in the computer's local directory
 }

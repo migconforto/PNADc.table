@@ -11,8 +11,8 @@ pnadc_graph(
   quartile,
   calculation,
   classifier,
-  path = F,
-  export = F,
+  path = FALSE,
+  export = FALSE,
   type = 1
 )
 }
@@ -40,7 +40,11 @@ ggplot2 graphic
 }
 \description{
 Creates PNADc bar or dot graphics
+
+\href{https://github.com/migux14/PNADc.table/tree/main/vignettes}{Documentation in English}
+
+\href{https://github.com/migux14/PNADc.table/tree/main/Documents\%20PT-BR}{Documentation in Portuguese - BR}
 }
 \examples{
-pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312")
+\donttest{pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312")}
 }

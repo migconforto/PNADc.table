@@ -12,8 +12,8 @@ pnadc_tracks(
   calculation,
   group,
   cluster,
-  path = F,
-  export = F
+  path = FALSE,
+  export = FALSE
 )
 }
 \arguments{
@@ -40,13 +40,16 @@ gt table
 }
 \description{
 Regroups a numeric or non-numeric variable from the PNADc
+
+\href{https://github.com/migux14/PNADc.table/tree/main/vignettes}{Documentation in English}
+
+\href{https://github.com/migux14/PNADc.table/tree/main/Documents\%20PT-BR}{Documentation in Portuguese - BR}
 }
 \examples{
 #For characters
-pnadc_tracks(~V403312, ~V2010, 2019, 1, calculation = "mean", group = ~V2010,
-cluster = list('Negra' = c('Preta', 'Parda'), 'Outros' = c('Amarela', 'Indigena')))
+\donttest{pnadc_tracks(~V403312, ~V2010, 2019, 1, calculation = "mean", group = ~V2010,
+cluster = list('Negra' = c('Preta', 'Parda'), 'Outros' = c('Amarela', 'Indigena')))}
 #For numbers
-pnadc_tracks(~V403312, ~V2009, 2019, 1, calculation = "mean",
-group = ~V2009, cluster = c(0, 100, 5))
-
+\donttest{pnadc_tracks(~V403312, ~V2009, 2019, 1, calculation = "mean",
+group = ~V2009, cluster = c(0, 100, 5))}
 }

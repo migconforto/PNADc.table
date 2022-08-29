@@ -4,7 +4,7 @@
 \alias{pnadc_mean}
 \title{pnadc_mean}
 \usage{
-pnadc_mean(variable, filter, year, quartile, path = F, export = F)
+pnadc_mean(variable, filter, year, quartile, path = FALSE, export = FALSE)
 }
 \arguments{
 \item{variable}{Variable of interest that will be used to calculate the mean.}
@@ -24,7 +24,11 @@ gt table.
 }
 \description{
 Create PNADc mean tables
+
+\href{https://github.com/migux14/PNADc.table/tree/main/vignettes}{Documentation in English}
+
+\href{https://github.com/migux14/PNADc.table/tree/main/Documents\%20PT-BR}{Documentation in Portuguese - BR}
 }
 \examples{
-pnadc_mean(~V403312, ~UF+V2010, 2019, 1)
+\donttest{pnadc_mean(~V403312, ~UF+V2010, 2019, 1)}
 }

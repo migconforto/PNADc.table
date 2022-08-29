@@ -2,6 +2,8 @@
 #' pnadc_total
 #'
 #' @description Create PNADc total tables
+#' @description [Documentation in English](https://github.com/migux14/PNADc.table/tree/main/vignettes)
+#' @description [Documentation in Portuguese - BR](https://github.com/migux14/PNADc.table/tree/main/Documents%20PT-BR)
 #'
 #' @param variable Variable of interest that will be used to calculate the Total. It can be a vector of variables.
 #' @param filter Variable that defines the aggregation level of the variable of interest. It can contain more than one level of aggregation.
@@ -21,16 +23,16 @@
 #' @return gt table.
 #' @export
 #'
-#' @examples pnadc_total(~V403312, ~UF+V2010, 2019, 1)
-pnadc_total <- function(variable, filter, year, quartile, path = F, export = F) {
+#' @examples \donttest{pnadc_total(~V403312, ~UF+V2010, 2019, 1)}
+pnadc_total <- function(variable, filter, year, quartile, path = FALSE, export = FALSE) {
   design_PNADc <- NULL
-  if (path == F) {
-    if (file.exists(fs::path_home(paste("Design","PNADc", year, quartile, sep = "_"))) == T) {
+  if (path == FALSE) {
+    if (file.exists(fs::path_home(paste("Design","PNADc", year, quartile, sep = "_"))) == TRUE) {
       Design <- paste("Design","PNADc", year, quartile, sep = "_")
       load(fs::path_home(Design))
 
-      tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
-      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
+      tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
+      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
       tabela <- as.data.frame(tabela)
       tabela <- rbind(tabela, tot.geral)
 
@@ -78,7 +80,7 @@ pnadc_total <- function(variable, filter, year, quartile, path = F, export = F) 
             missing_text = "Grand total")
       }
 
-      if (export == F) {
+      if (export == FALSE) {
         return(tabela_final)
       }
       if (export == "df") {
@@ -86,14 +88,14 @@ pnadc_total <- function(variable, filter, year, quartile, path = F, export = F) 
       }
       if (export == "csv") {
         utils::write.csv2(tabela_final, file = paste(fs::path_home(),"/Tabela_pnadc_total_", year, "_", quartile,".csv", sep = ""))
-        print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+        message(paste("Saved in directory: ",fs::path_home(), sep = ""))
       } else {
         gt::gtsave(tabela_final, filename = paste("Tabela_pnadc_total_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-        print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+        message(paste("Saved in directory: ",fs::path_home(), sep = ""))
       }
 
       rm(list = c("tabela", "tabela_final", "grupo"))
-      gc(reset = T)
+      gc(reset = TRUE)
     }
     else {
       pnadc_download(year = year, quartile = quartile)
@@ -101,8 +103,8 @@ pnadc_total <- function(variable, filter, year, quartile, path = F, export = F) 
       Design <- paste("Design","PNADc", year, quartile, sep = "_")
       load(fs::path_home(Design))
 
-      tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
-      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
+      tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
+      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
       tabela <- as.data.frame(tabela)
       tabela <- rbind(tabela, tot.geral)
 
@@ -150,7 +152,7 @@ pnadc_total <- function(variable, filter, year, quartile, path = F, export = F) 
             missing_text = "Grand total")
       }
 
-      if (export == F) {
+      if (export == FALSE) {
         return(tabela_final)
       }
       if (export == "df") {
@@ -158,25 +160,25 @@ pnadc_total <- function(variable, filter, year, quartile, path = F, export = F) 
       }
       if (export == "csv") {
         utils::write.csv2(tabela_final, file = paste(fs::path_home(),"/Tabela_pnadc_total_", year, "_", quartile,".csv", sep = ""))
-        print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+        message(paste("Saved in directory: ",fs::path_home(), sep = ""))
       } else {
         gt::gtsave(tabela_final, filename = paste("Tabela_pnadc_total_", year, "_", quartile,".", export, sep = ""), path = fs::path_home())
-        print(paste("Saved in directory: ",fs::path_home(), sep = ""))
+        message(paste("Saved in directory: ",fs::path_home(), sep = ""))
       }
       rm(list = c("tabela", "tabela_final", "grupo"))
-      gc(reset = T)
+      gc(reset = TRUE)
     }
   }
   else {
     path_file <- fs::path_home(paste("path_PNADcTABLE", year, quartile, sep = "_"))
 
-    if (file.exists(path_file) == T) {
+    if (file.exists(path_file) == TRUE) {
       load(path_file)
       local_file <- paste(path, "/design_PNADc_", year, "_", quartile, sep = "")
       load(local_file)
 
-      tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
-      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
+      tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
+      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
       tabela <- as.data.frame(tabela)
       tabela <- rbind(tabela, tot.geral)
 
@@ -224,7 +226,7 @@ pnadc_total <- function(variable, filter, year, quartile, path = F, export = F) 
             missing_text = "Grand total")
       }
 
-      if (export == F) {
+      if (export == FALSE) {
         return(tabela_final)
       }
       if (export == "df") {
@@ -232,17 +234,17 @@ pnadc_total <- function(variable, filter, year, quartile, path = F, export = F) 
       }
       if (export == "csv") {
         utils::write.csv2(tabela_final, file = paste(path, "/Tabela_pnadc_total_", year, "_", quartile,".csv", sep = ""))
-        print(paste("Saved in directory: ", path, sep = ""))
+        message(paste("Saved in directory: ", path, sep = ""))
       } else {
         gt::gtsave(tabela_final, filename = paste("Tabela_pnadc_total_", year, "_", quartile,".", export, sep = ""), path = path)
-        print(paste("Saved in directory: ", path, sep = ""))
+        message(paste("Saved in directory: ", path, sep = ""))
       }
 
       rm(list = c("tabela", "tabela_final", "grupo"))
-      gc(reset = T)
+      gc(reset = TRUE)
     }
     else {
-      if (file.exists(fs::path_home(paste("Design","PNADc", year, quartile, sep = "_"))) == T) {
+      if (file.exists(fs::path_home(paste("Design","PNADc", year, quartile, sep = "_"))) == TRUE) {
         Design <- paste("Design","PNADc", year, quartile, sep = "_")
         load(fs::path_home(Design))
       } else {
@@ -252,8 +254,8 @@ pnadc_total <- function(variable, filter, year, quartile, path = F, export = F) 
         load(paste(path, Design, sep = ""))
       }
 
-      tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = T, na.rm.by = T, na.rm.all = T)
-      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = T)
+      tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
+      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
       tabela <- as.data.frame(tabela)
       tabela <- rbind(tabela, tot.geral)
 
@@ -301,7 +303,7 @@ pnadc_total <- function(variable, filter, year, quartile, path = F, export = F) 
             missing_text = "Grand total")
       }
 
-      if (export == F) {
+      if (export == FALSE) {
         return(tabela_final)
       }
       if (export == "df") {
@@ -309,14 +311,14 @@ pnadc_total <- function(variable, filter, year, quartile, path = F, export = F) 
       }
       if (export == "csv") {
         utils::write.csv2(tabela_final, file = paste(path, "/Tabela_pnadc_total_", year, "_", quartile,".csv", sep = ""))
-        print(paste("Saved in directory: ", path, sep = ""))
+        message(paste("Saved in directory: ", path, sep = ""))
       } else {
         gt::gtsave(tabela_final, filename = paste("Tabela_pnadc_total_", year, "_", quartile,".", export, sep = ""), path = path)
-        print(paste("Saved in directory: ", path, sep = ""))
+        message(paste("Saved in directory: ", path, sep = ""))
       }
 
       rm(list = c("tabela", "tabela_final", "grupo"))
-      gc(reset = T)
+      gc(reset = TRUE)
     }
   }
 }
