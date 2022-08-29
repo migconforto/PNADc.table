@@ -1,7 +1,7 @@
 # Tabela mean ------------------------------------------------------------
 #' pnadc_mean
 #'
-#' @description Create PNADc mean tables
+#' @description Creates PNADc mean tables for one or more variables. Tables can be generated in \R or exported using the "export" option
 #' @description [Documentation in English](https://github.com/migux14/PNADc.table/tree/main/vignettes)
 #' @description [Documentation in Portuguese - BR](https://github.com/migux14/PNADc.table/tree/main/Documents%20PT-BR)
 #'
@@ -21,7 +21,6 @@
 #' @importFrom gt gtsave
 #'
 #' @return gt table.
-#' @export
 #'
 #' @examples \donttest{pnadc_mean(~V403312, ~UF+V2010, 2019, 1)}
 pnadc_mean <- function(variable, filter, year, quartile, path = FALSE, export = FALSE) {

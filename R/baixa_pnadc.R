@@ -7,20 +7,20 @@
 #'
 #' @param year The year you want to download. Must be a number between 2012 and the current year. It does not accept a vector of years.
 #' @param quartile The quartile of the year you want to download. Must be a number between 1 and 4. It does not accept a vector of quartiles.
-#' @param path Path of the local directory where the PNAD files are or where you want to save the data. If it does not exist, a new directory will be created.
+#' @param path Path of the local directory where the PNAD files are or where you want to save the data.
 #'
 #' @importFrom PNADcIBGE get_pnadc
 #' @importFrom PNADcIBGE read_pnadc
 #' @importFrom PNADcIBGE pnadc_design
+#' @importFrom PNADcIBGE pnadc_labeller
 #'
 #' @return No return value
 #'
 #' @examples
-#'\donttest{pnadc_download(2018, 1)}
-#' #A file named "Design_PNADc_2018_1" will be created directly in the computer's local directory
+#'\donttest{pnadc_download(2018, 1, tempdir())}
+#' #A file named "Design_PNADc_2018_1" will be created directly in the computer's temporary directory
 pnadc_download <- function(year, quartile, path = NULL) {
   a <- webshot2::`%>%`(1,sum())
-  attachNamespace("PNADcIBGE")
   if (is.null(path)) {
     if (file.exists(fs::path_home(paste("Design_PNADc", year, quartile, sep = "_"))) == TRUE) {
       message("This edition of the PNADc has already been downloaded and can be used.")
@@ -30,6 +30,7 @@ pnadc_download <- function(year, quartile, path = NULL) {
 
       file <- paste("Design_PNADc", year, quartile, sep = "_")
       save(design_PNADc, file = fs::path_home(file))
+      message(paste("File saved in directory:", fs::path_home(), sep = ""))
     }
   }
   else {
@@ -37,6 +38,7 @@ pnadc_download <- function(year, quartile, path = NULL) {
       message("This edition of the PNADc has already been downloaded and can be used.")
 
       save(path, file = fs::path_home(paste("path_PNADcTABLE", year, quartile, sep = "_")))
+      message(paste("File saved in directory:", path, sep = ""))
     }
     else {
       if (file.exists(paste(path, "/PNADC_0", quartile, year, ".txt", sep = "")) == TRUE) {
@@ -48,6 +50,7 @@ pnadc_download <- function(year, quartile, path = NULL) {
         path <- paste(path, "/Design_PNADc_", year, "_", quartile, sep = "")
         save(design_PNADc, file = path)
         save(path, file = fs::path_home(paste("path_PNADcTABLE", year, quartile, sep = "_")))
+        message(paste("File saved in directory:", fs::path_home(), sep = ""))
       }
       else {
         design_PNADc <- PNADcIBGE::get_pnadc(year, quarter = quartile, design = TRUE)
@@ -55,6 +58,7 @@ pnadc_download <- function(year, quartile, path = NULL) {
         path <- paste(path, "/Design_PNADc_", year, "_", quartile, sep = "")
         save(design_PNADc, file = path)
         save(path, file = fs::path_home(paste("path_PNADcTABLE", year, quartile, sep = "_")))
+        message(paste("File saved in directory:", path, sep = ""))
       }
     }
   }

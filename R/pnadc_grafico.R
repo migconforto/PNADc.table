@@ -1,7 +1,7 @@
 # PNADc Grafico -----------------------------------------------------------
 #' pnadc_graph
 #'
-#' @description Creates PNADc bar or dot graphics
+#' @description Creates PNADc bar or dot graphics for one or more variables. Tables can be generated in \R or exported using the "export" option
 #' @description [Documentation in English](https://github.com/migux14/PNADc.table/tree/main/vignettes)
 #' @description [Documentation in Portuguese - BR](https://github.com/migux14/PNADc.table/tree/main/Documents%20PT-BR)
 #'
@@ -11,7 +11,7 @@
 #' @param quartile The quartile of the year you want to analyze. Must be a number between 1 and 4. It does not accept an array of quartiles.
 #' @param calculation calculation what you want to do. Must be mean, total or percentage and come between "". It does not accept a list of calculations.
 #' @param classifier One of the variables that were used in the 'variable' or 'filter' parameter that will serve as a classifier filter in the legend and graph. It must come between "".
-#' @param path Path to the directory where the Design was created through the function "pnadc_download". It only accepts logical values True or False.
+#' @param path Path to the directory where the Design was created through the function "pnadc_download".
 #' @param export Export the chart to "pdf" and "png" formats. If it has not been filled, it returns a ggplot2 graph in R space. It must be a string and be enclosed in " ".
 #' @param type Type of chart you want to generate. 1 for Bar Graph and 2 for Dot Graph. Does not accept an array of types.
 #'
@@ -23,7 +23,6 @@
 #' @importFrom ggplot2 guide_axis
 #'
 #' @return ggplot2 graphic
-#' @export
 #'
 #' @examples \donttest{pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312")}
 pnadc_graph <- function(variable, filter, year, quartile, calculation, classifier, path = FALSE, export = FALSE, type = 1) {

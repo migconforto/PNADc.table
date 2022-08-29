@@ -1,7 +1,7 @@
 # PNADc faixas -----------------------------------------------------------
 #' pnadc_tracks
 #'
-#' @description Regroups a numeric or non-numeric variable from the PNADc
+#' @description Regroups a numeric or non-numeric variable from the PNADc for one or more variables. Tables can be generated in \R or exported using the "export" option
 #' @description [Documentation in English](https://github.com/migux14/PNADc.table/tree/main/vignettes)
 #' @description [Documentation in Portuguese - BR](https://github.com/migux14/PNADc.table/tree/main/Documents%20PT-BR)
 #'
@@ -12,7 +12,7 @@
 #' @param calculation calculation what you want to do. Must be mean, total or percentage and come between "". It does not accept a list of calculations.
 #' @param group Variable used to group a set of data. It must be one of the variables listed in the "filter". Must be a formula, that is, have ~ in front of the variable.
 #' @param cluster How the grouping strip will be made. In the numerical case it must be a vector calculation the minimum, maximum and size of the range. In the categorical case it must be a list calculation the old names and the new name that will replace them.
-#' @param path Path to the directory where the Design was created through the function "pnadc_download". It only accepts logical values True or False.
+#' @param path Path to the directory where the Design was created through the function "pnadc_download".
 #' @param export Export the table to "html", "pdf", "png" and "rtf" formats. If you want to return a data frame in R space, use "df". If it has not been filled, it returns a gt table in R space. It must be a string and be enclosed in " ".
 #'
 #' @importFrom gt tab_header
@@ -25,7 +25,6 @@
 #' @importFrom stats as.formula
 #'
 #' @return gt table
-#' @export
 #'
 #' @examples
 #' #For characters
