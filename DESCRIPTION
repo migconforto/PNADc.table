@@ -1,12 +1,12 @@
 Package: PNADc.table
-Title: PNADc data tabulation
+Title: Continuous National Household Sample Survey Data Tabulation
 Version: 1.0.0
 Authors@R: c(
-    person("Miguel", "Conforto", , "miguel.conforto1@gmail.com", role = c("aut", "cre"),
-    person("Cássio", "Almeida", , "cassiofpa@gmail.com", role = c("aut")),
-    person("Sandra", "Canton", , "sandra.cardoso@ibge.gov.br", role = c("aut"))
+    person("Miguel", "Conforto", , "miguel.conforto1@gmail.com", role = c("aut", "cre")),
+    person("Cássio", "Almeida", , "cassiofpa@gmail.com ", role = "aut"),
+    person("Sandra", "Canton", , "sandra.cardoso@ibge.gov.br", role = "aut")
   )
-Description: Functions that return graphs and tables with already calculated PNADc data (mean, total and percentage).
+Description: Tables and graphs of the Continuous National Sample Survey by Household.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -26,6 +26,5 @@ Imports:
     survey,
     utils,
     webshot2
-VignetteBuilder: knitr
 URL: https://github.com/migux14/PNADc.table
 BugReports: https://github.com/migux14/PNADc.table/issues
