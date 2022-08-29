@@ -15,10 +15,6 @@ knitr::opts_chunk$set(
 
 # PNADc.table
 
-<!-- badges: start -->
-[![R-CMD-check](https://github.com/migux14/PNADc.table/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/migux14/PNADc.table/actions/workflows/R-CMD-check.yaml)
-<!-- badges: end -->
-
 The goal of PNADc.table is to make PNADc tables in an easy and interesting way
 
 ## Installation
@@ -27,8 +23,9 @@ You can install the development version of PNADc.table from [GitHub](https://git
       
 
 ``` r
-# install.packages("devtools")
+install.packages("devtools")
 devtools::install_github("migux14/PNADc.table")
+library(PNADc.table)
 ```
 
 ## Example
