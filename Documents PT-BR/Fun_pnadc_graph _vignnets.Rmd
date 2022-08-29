@@ -1,0 +1,145 @@
+---
+title: "Função pnadc_graph"
+author: "Miguel Conforto, Cássio Almeida, Sandra Canton"
+output: 
+  html_notebook: 
+    toc: yes
+    fig_caption: yes
+---
+# Para que serve?
+<div style="text-align: justify">
+  A função _pnadc_graph_ serve para criar **gráficos** e exporta-las nos formatos png, html e pdf.
+  
+# Argumentos
+<div style="text-align: justify">
+* **Variable**:
+<br/> Característica de interesse que servirá para o cálculo e criação do gráfico. Deve ser uma variável numérica e ser escrita como fórmula (~ na frente da variável). Observações não numéricas/vazias são desconsideradas.
+
+* **Filter**:
+<br/> Variável que define o nível de agregação da variável de interesse. Pode conter mais de um nível de agregação e deve ser categórica. Também precisa ser escrita como fórmula.
+
+* **Year**:
+<br/> Ano que deseja analisar. Deve ser um número entre 2012 e o ano atual. Não aceita um vetor de anos. Caso a edição escolhida ainda não tenha sido baixada a função _pnadc_download_ será chamada automaticamente e criará um design no local desejado.
+
+* **Quartile**: 
+<br/> Quartil do ano de deseja analisar. Deve ser um numero entre 1 e 4. Nao aceita um vetor de quartis.
+
+* **Calculation**:
+<br/> Conta que deseja fazer. Deve ser uma entre: média (mean), total (total) e percentual (percentage). Deve vir entre "". Não aceita uma lista de contas.
+
+* **Classifier**:
+<br/> Uma das variáveis que foram usadas no parâmetro 'variavel' ou 'filtro' que servira como filtro classificador na legenda e no grafico. Deve vir entre "".
+
+* **Path**:
+<br/> Local/diretório aonde deseja salvar a tabela final. Caso já tenha utilizado a função _pnadc_download_ para criar o design em um caminho específico basta utilizar o valor lógico True (T). Caso não seja escolhido um caminho a tabela será salva na pasta usuário do disco rígido local.
+
+* **Export**:
+<br/> Exportar o gráfico para os formatos "pdf" e "png". Caso nao tenho sido preenchida retorna um ggplot2 gráfico em espaço R. Deve ser uma string e vir entre "".
+
+* **Type**:
+<br/> Tipo de gráfico que deseja gerar. 1 para Gráfico de barras e 2 para Gráfico de Pontos. Não aceita um vetor de tipos.
+
+# O que a função retorna?
+<div style="text-align: justify">
+  A função retorna um **ggplot graphic** dentro do ambiente R caso a opção **export não seja preenchida**. Caso o argumento exportar seja preenchido com uma das demais opções a função criará um arquivo diretamente no diretório informado.
+  
+# Exemplos
+<div style="text-align: justify">
+  Nesse exemplo vamos criar um gráfico de barras da média do rendimento bruto mensal (V403312) separado por unidade da federação (UF) de 2019.1 contando que o usuário não utilizou a função _pnadc_download_ para fazer o download dos arquivos e também não deseja exportar o gráfico.
+  
+```{r}
+pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312")
+#A conta que desejamos fazer é a de "media"
+#Deve ser escrita estritamente dessa forma e sem acentos
+#O classificador escolhido foi a variável rendimento bruto mensal (V403312)
+#Como o argumento "tipo" não foi definido, a função fará um gráfico de barras
+```
+<div style="text-align: justify">
+  Agora vamos adicionar a variável Sexo (V2007) junto à UF e fazer uma classificação por sexo:
+
+```{r}
+pnadc_graph(~V403312, ~UF+V2007, 2019, 1, calculation = "mean", classifier = "V2007")
+#O gráfico gerado será um gráfico de barras também
+#O Classificador Sexo (V2007) vai nos mostar as diferenças entre o rendimento bruto de cada Sexo
+```
+
+<div style="text-align: justify">
+  Também no gráfico anterior, é possível utilizar a variável Rendimento Bruto (V403312) como classificador, contudo a vizualização não ficará tão clara. Observe:
+  
+```{r}
+pnadc_graph(~V403312, ~UF+V2007, 2019, 1, calculation = "mean", classifier = "V403312")
+```
+
+<div style="text-align: justify">
+  As informações desses gráficos em conjunto às tabelas da função _pnadc_media_ trazem uma vizualização mais clara das diferenças de rendimento entre homens e mulheres e facilitam uma comparação.
+
+<br/>   Agora vamos exportar as tabelas anteriores. Para isso basta utilizar o argumento **export** e selecionar um dos formatos entre "pdf" e "png".
+```{r}
+pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312", export = "pdf")
+#Exporta o gráfico no formato .pdf para o diretório padrão do usuário.
+pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312", export = "png")
+#Exporta o gráfico no formato .png para o diretório padrão do usuário.
+```
+<div style="text-align: justify">
+  O diretório aonde o gráfico é salvo pode ser escolhido através do argumento **path**. Veja o exemplo a seguir:
+
+```{r}
+pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", path = "C:/Dados_PNADc", classifier = "V403312", export = "pdf")
+#Exporta o gráfico no formato .pdf para o diretório padrão do usuário.
+pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", path = "C:/Dados_PNADc", classifier = "V403312", export = "png")
+#Exporta o gráfico no formato .png para o diretório padrão do usuário.
+```
+
+<div style="text-align: justify">
+  Vamos refazer os gráficos anteriores, porém agora em **gráficos de pontos**:
+```{r}
+pnadc_graph(~V403312, ~UF, 2019, 1, calculation = "mean", classifier = "V403312", type = 2)
+#Utilizando o argumento "tipo = 2" o gráfico que retorna é o gráfico de pontos ao invés do gráfico de barras.
+```
+<div style="text-align: justify">
+  
+```{r}
+pnadc_graph(~V403312, ~UF+V2007, 2019, 1, calculation = "mean", classifier = "V2007", type = 2)
+#Gráfico anterior utilizando Sexo (V2007) como classificador.
+```
+<div style="text-align: justify">
+  Agora vamos supor que desejamos fazer gráficos do **total** e da **porcentagem** do Rendimento Bruto (V403312) por Sexo (V2007) e/ou Raça (V2010).
+<br/> Começando pelos gráficos de barra:
+
+```{r}
+pnadc_graph(~V403312, ~V2007, 2019, 1, calculation = "total", classifier = "V2007")
+#Gráfico de Rendimento Bruto (V403312) x Sexo (V2007)
+#O argumento "conta = 'total'" retorna um gráfico que contém os totais da variável Rendimento Bruto (V403312)
+#Como o argumento "exportar" não foi selecionado, o gráfico será gerado em ambiente R
+pnadc_graph(~V403312, ~V2010, 2019, 1, calculation = "percentage", classifier = "V2010")
+#Gráfico de Rendimento Bruto (V403312) x Raça (V2010)
+#O argumento "conta = 'percentual'" retorna um gráfico que contém os percentuais da variável Rendimento Bruto (V403312)
+#Como o argumento "exportar" não foi selecionado, o gráfico será gerado em ambiente R
+```
+<div style="text-align: justify">
+  E agora faremos os gráficos de ponto:
+
+```{r}
+pnadc_graph(~V403312, ~V2007, 2019, 1, calculation = "total", classifier = "V2007", type = 2)
+#Gráfico de Rendimento Bruto (V403312) x Sexo (V2007)
+#O argumento "conta = 'total'" retorna um gráfico que contém os totais da variável Rendimento Bruto (V403312)
+#Como o argumento "exportar" não foi selecionado, o gráfico será gerado em ambiente R
+pnadc_graph(~V403312, ~V2010, 2019, 1, calculation = "percentage", classifier = "V2010", type = 2)
+#Gráfico de Rendimento Bruto (V403312) x Raça (V2010)
+#O argumento "conta = 'percentual'" retorna um gráfico que contém os percentuais da variável Rendimento Bruto (V403312)
+#Como o argumento "exportar" não foi selecionado, o gráfico será gerado em ambiente R
+```
+
+<div style="text-align: justify">
+  Podemos juntar as duas variáveis para facilitar a análise. Dessa forma o argumento "filtro" seria:
+  
+```{r}
+pnadc_graph(~V403312, ~V2010+V2007, 2019, 1, calculation = "total", classifier = "V2007", type = 1)
+#Cabe ressaltar que mudar o classificador altera a vizualização do gráfico
+#A ordem como o filtro é colocado também altera o gráfico
+pnadc_graph(~V403312, ~V2010+V2007, 2019, 1, calculation = "total", classifier = "V2010", type = 1)
+```
+
+# OBS.:
+<div style="text-align: justify">
+A execução dos códigos será mais rápida ou mais lenta dependendo da **velocidade de processamento** do computador e da quantidade de **memória RAM** disponível.
