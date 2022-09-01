@@ -37,8 +37,9 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
       tot.geral <- as.data.frame(tot.geral)
 
       for (i in 1:nrow(tabela)) {
-        tabela[i,(ncol(tabela) - 1)] <- (tabela[i,(ncol(tabela) - 1)]/tot.geral[1,1])
-        tabela[i,ncol(tabela)] <- (tabela[i,ncol(tabela)]/tot.geral[1,2])
+        for (k in 3:ncol(tabela)) {
+          tabela[i, k] <- (tabela[i, k]/tot.geral[1,1])
+        }
       }
 
       rm(list = c("tot.geral", "design_PNADc"))
@@ -67,7 +68,7 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
             columns = 1:ncol(tabela),
             missing_text = "Grand total") %>%
           fmt_percent(
-            columns = (ncol(tabela) - 1):ncol(tabela)
+            columns = 3:ncol(tabela)
           )
       } else {
         tabela_final <- gt::gt(tabela) %>%
@@ -88,7 +89,7 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
             columns = 1:ncol(tabela),
             missing_text = "Grand total") %>%
           fmt_percent(
-            columns = (ncol(tabela) - 1):ncol(tabela)
+            columns = 3:ncol(tabela)
           )
       }
 
@@ -121,8 +122,9 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
       tot.geral <- as.data.frame(tot.geral)
 
       for (i in 1:nrow(tabela)) {
-        tabela[i,(ncol(tabela) - 1)] <- (tabela[i,(ncol(tabela) - 1)]/tot.geral[1,1])
-        tabela[i,ncol(tabela)] <- (tabela[i,ncol(tabela)]/tot.geral[1,2])
+        for (k in 3:ncol(tabela)) {
+          tabela[i, k] <- (tabela[i, k]/tot.geral[1,1])
+        }
       }
 
       rm(list = c("tot.geral", "design_PNADc"))
@@ -151,7 +153,7 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
             columns = 1:ncol(tabela),
             missing_text = "Grand total") %>%
           fmt_percent(
-            columns = (ncol(tabela) - 1):ncol(tabela)
+            columns = 3:ncol(tabela)
           )
       } else {
         tabela_final <- gt::gt(tabela) %>%
@@ -172,7 +174,7 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
             columns = 1:ncol(tabela),
             missing_text = "Grand total") %>%
           fmt_percent(
-            columns = (ncol(tabela) - 1):ncol(tabela)
+            columns = 3:ncol(tabela)
           )
       }
 
@@ -208,8 +210,9 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
       tot.geral <- as.data.frame(tot.geral)
 
       for (i in 1:nrow(tabela)) {
-        tabela[i,(ncol(tabela) - 1)] <- (tabela[i,(ncol(tabela) - 1)]/tot.geral[1,1])
-        tabela[i,ncol(tabela)] <- (tabela[i,ncol(tabela)]/tot.geral[1,2])
+        for (k in 3:ncol(tabela)) {
+          tabela[i, k] <- (tabela[i, k]/tot.geral[1,1])
+        }
       }
 
       rm(list = c("tot.geral", "design_PNADc"))
@@ -238,7 +241,7 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
             columns = 1:ncol(tabela),
             missing_text = "Grand total") %>%
           fmt_percent(
-            columns = (ncol(tabela) - 1):ncol(tabela)
+            columns = 3:ncol(tabela)
           )
       } else {
         tabela_final <- gt::gt(tabela) %>%
@@ -259,7 +262,7 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
             columns = 1:ncol(tabela),
             missing_text = "Grand total") %>%
           fmt_percent(
-            columns = (ncol(tabela) - 1):ncol(tabela)
+            columns = 3:ncol(tabela)
           )
       }
 
@@ -297,8 +300,9 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
       tot.geral <- as.data.frame(tot.geral)
 
       for (i in 1:nrow(tabela)) {
-        tabela[i,(ncol(tabela) - 1)] <- (tabela[i,(ncol(tabela) - 1)]/tot.geral[1,1])
-        tabela[i,ncol(tabela)] <- (tabela[i,ncol(tabela)]/tot.geral[1,2])
+        for (k in 3:ncol(tabela)) {
+          tabela[i, k] <- (tabela[i, k]/tot.geral[1,1])
+        }
       }
 
       rm(list = c("tot.geral", "design_PNADc"))
@@ -327,7 +331,7 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
             columns = 1:ncol(tabela),
             missing_text = "Grand total") %>%
           fmt_percent(
-            columns = (ncol(tabela) - 1):ncol(tabela)
+            columns = 3:ncol(tabela)
           )
       } else {
         tabela_final <- gt::gt(tabela) %>%
@@ -348,7 +352,7 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
             columns = 1:ncol(tabela),
             missing_text = "Grand total") %>%
           fmt_percent(
-            columns = (ncol(tabela) - 1):ncol(tabela)
+            columns = 3:ncol(tabela)
           )
       }
 

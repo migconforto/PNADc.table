@@ -17,8 +17,8 @@
 #' @return No return value
 #'
 #' @examples
-#'\donttest{pnadc_download(2018, 1, tempdir())}
-#' #A file named "Design_PNADc_2018_1" will be created directly in the computer's temporary directory
+#'\donttest{pnadc_download(2018, 1)}
+#' #A file named "Design_PNADc_2018_1" will be created directly in the computer's directory
 pnadc_download <- function(year, quartile, path = NULL) {
   a <- webshot2::`%>%`(1,sum())
   if (is.null(path)) {
