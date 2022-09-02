@@ -32,13 +32,16 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
       load(fs::path_home(Design))
 
       tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
-      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
       tabela <- as.data.frame(tabela)
-      tot.geral <- as.data.frame(tot.geral)
+      tot.geral <- tabela[1,]
 
-      for (i in 1:nrow(tabela)) {
-        for (k in 3:ncol(tabela)) {
-          tabela[i, k] <- (tabela[i, k]/tot.geral[1,1])
+      for (i in 3:ncol(tabela)) {
+        tot.geral[1,i] <- sum(tabela[,i])
+      }
+
+      for (k in 3:ncol(tabela)) {
+        for (i in 1:nrow(tabela)) {
+          tabela[i, k] <- (tabela[i, k]/tot.geral[1,k])
         }
       }
 
@@ -117,13 +120,16 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
       load(fs::path_home(Design))
 
       tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
-      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
       tabela <- as.data.frame(tabela)
-      tot.geral <- as.data.frame(tot.geral)
+      tot.geral <- tabela[1,]
 
-      for (i in 1:nrow(tabela)) {
-        for (k in 3:ncol(tabela)) {
-          tabela[i, k] <- (tabela[i, k]/tot.geral[1,1])
+      for (i in 3:ncol(tabela)) {
+        tot.geral[1,i] <- sum(tabela[,i])
+      }
+
+      for (k in 3:ncol(tabela)) {
+        for (i in 1:nrow(tabela)) {
+          tabela[i, k] <- (tabela[i, k]/tot.geral[1,k])
         }
       }
 
@@ -205,13 +211,16 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
       load(local_file)
 
       tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
-      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
       tabela <- as.data.frame(tabela)
-      tot.geral <- as.data.frame(tot.geral)
+      tot.geral <- tabela[1,]
 
-      for (i in 1:nrow(tabela)) {
-        for (k in 3:ncol(tabela)) {
-          tabela[i, k] <- (tabela[i, k]/tot.geral[1,1])
+      for (i in 3:ncol(tabela)) {
+        tot.geral[1,i] <- sum(tabela[,i])
+      }
+
+      for (k in 3:ncol(tabela)) {
+        for (i in 1:nrow(tabela)) {
+          tabela[i, k] <- (tabela[i, k]/tot.geral[1,k])
         }
       }
 
@@ -295,13 +304,16 @@ pnadc_porcent <- function(variable, filter, year, quartile, path = FALSE, export
       }
 
       tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
-      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
       tabela <- as.data.frame(tabela)
-      tot.geral <- as.data.frame(tot.geral)
+      tot.geral <- tabela[1,]
 
-      for (i in 1:nrow(tabela)) {
-        for (k in 3:ncol(tabela)) {
-          tabela[i, k] <- (tabela[i, k]/tot.geral[1,1])
+      for (i in 3:ncol(tabela)) {
+        tot.geral[1,i] <- sum(tabela[,i])
+      }
+
+      for (k in 3:ncol(tabela)) {
+        for (i in 1:nrow(tabela)) {
+          tabela[i, k] <- (tabela[i, k]/tot.geral[1,k])
         }
       }
 

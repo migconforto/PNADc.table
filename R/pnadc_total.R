@@ -31,11 +31,9 @@ pnadc_total <- function(variable, filter, year, quartile, path = FALSE, export =
       load(fs::path_home(Design))
 
       tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
-      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
       tabela <- as.data.frame(tabela)
-      tabela <- rbind(tabela, tot.geral)
 
-      rm(list = c("tot.geral", "design_PNADc"))
+      rm(design_PNADc)
       gc()
 
       grupo <- as.character(filter)
@@ -103,11 +101,9 @@ pnadc_total <- function(variable, filter, year, quartile, path = FALSE, export =
       load(fs::path_home(Design))
 
       tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
-      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
       tabela <- as.data.frame(tabela)
-      tabela <- rbind(tabela, tot.geral)
 
-      rm(list = c("tot.geral", "design_PNADc"))
+      rm(design_PNADc)
       gc()
 
       grupo <- as.character(filter)
@@ -177,11 +173,9 @@ pnadc_total <- function(variable, filter, year, quartile, path = FALSE, export =
       load(local_file)
 
       tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
-      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
       tabela <- as.data.frame(tabela)
-      tabela <- rbind(tabela, tot.geral)
 
-      rm(list = c("tot.geral", "design_PNADc"))
+      rm(design_PNADc)
       gc()
 
       grupo <- as.character(filter)
@@ -254,11 +248,9 @@ pnadc_total <- function(variable, filter, year, quartile, path = FALSE, export =
       }
 
       tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
-      tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
       tabela <- as.data.frame(tabela)
-      tabela <- rbind(tabela, tot.geral)
 
-      rm(list = c("tot.geral", "design_PNADc"))
+      rm(design_PNADc)
       gc()
 
       grupo <- as.character(filter)

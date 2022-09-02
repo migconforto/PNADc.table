@@ -156,20 +156,20 @@ pnadc_graph <- function(variable, filter, year, quartile, calculation, classifie
       }
       if (calculation == "percentage") {
         tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
-        tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
-
         tabela <- as.data.frame(tabela)
-        tot.geral <- as.data.frame(tot.geral)
+        tot.geral <- tabela[1,]
 
-        rm(design_PNADc)
-        gc()
-
-        for (i in 1:nrow(tabela)) {
-          tabela[i,(ncol(tabela) - 1)] <- (tabela[i,(ncol(tabela) - 1)]/tot.geral[1,1])
-          tabela[i,ncol(tabela)] <- (tabela[i,ncol(tabela)]/tot.geral[1,2])
+        for (i in 3:ncol(tabela)) {
+          tot.geral[1,i] <- sum(tabela[,i])
         }
 
-        rm(tot.geral)
+        for (k in 3:ncol(tabela)) {
+          for (i in 1:nrow(tabela)) {
+            tabela[i, k] <- (tabela[i, k]/tot.geral[1,k])
+          }
+        }
+
+        rm(design_PNADc)
         gc()
 
         tabela <- as.data.frame(c(tabela[fil[2]], tabela[var[2]], tabela[classifier]))
@@ -348,20 +348,20 @@ pnadc_graph <- function(variable, filter, year, quartile, calculation, classifie
       }
       if (calculation == "percentage") {
         tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
-        tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
-
         tabela <- as.data.frame(tabela)
-        tot.geral <- as.data.frame(tot.geral)
+        tot.geral <- tabela[1,]
 
-        rm(design_PNADc)
-        gc()
-
-        for (i in 1:nrow(tabela)) {
-          tabela[i,(ncol(tabela) - 1)] <- (tabela[i,(ncol(tabela) - 1)]/tot.geral[1,1])
-          tabela[i,ncol(tabela)] <- (tabela[i,ncol(tabela)]/tot.geral[1,2])
+        for (i in 3:ncol(tabela)) {
+          tot.geral[1,i] <- sum(tabela[,i])
         }
 
-        rm(tot.geral)
+        for (k in 3:ncol(tabela)) {
+          for (i in 1:nrow(tabela)) {
+            tabela[i, k] <- (tabela[i, k]/tot.geral[1,k])
+          }
+        }
+
+        rm(design_PNADc)
         gc()
 
         tabela <- as.data.frame(c(tabela[fil[2]], tabela[var[2]], tabela[classifier]))
@@ -545,21 +545,22 @@ pnadc_graph <- function(variable, filter, year, quartile, calculation, classifie
       }
       if (calculation == "percentage") {
         tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
-        tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
 
         rm(design_PNADc)
         gc()
 
         tabela <- as.data.frame(tabela)
-        tot.geral <- as.data.frame(tot.geral)
+        tot.geral <- tabela[1,]
 
-        for (i in 1:nrow(tabela)) {
-          tabela[i,(ncol(tabela) - 1)] <- (tabela[i,(ncol(tabela) - 1)]/tot.geral[1,1])
-          tabela[i,ncol(tabela)] <- (tabela[i,ncol(tabela)]/tot.geral[1,2])
+        for (i in 3:ncol(tabela)) {
+          tot.geral[1,i] <- sum(tabela[,i])
         }
 
-        rm(tot.geral)
-        gc()
+        for (k in 3:ncol(tabela)) {
+          for (i in 1:nrow(tabela)) {
+            tabela[i, k] <- (tabela[i, k]/tot.geral[1,k])
+          }
+        }
 
         tabela <- as.data.frame(c(tabela[fil[2]], tabela[var[2]], tabela[classifier]))
 
@@ -743,21 +744,22 @@ pnadc_graph <- function(variable, filter, year, quartile, calculation, classifie
       }
       if (calculation == "percentage") {
         tabela <- survey::svyby(formula = variable, by = filter, design = design_PNADc, FUN = survey::svytotal, na.rm = TRUE, na.rm.by = TRUE, na.rm.all = TRUE)
-        tot.geral <- survey::svytotal(x = variable, design = design_PNADc, na.rm = TRUE)
 
         rm(design_PNADc)
         gc()
 
         tabela <- as.data.frame(tabela)
-        tot.geral <- as.data.frame(tot.geral)
+        tot.geral <- tabela[1,]
 
-        for (i in 1:nrow(tabela)) {
-          tabela[i,(ncol(tabela) - 1)] <- (tabela[i,(ncol(tabela) - 1)]/tot.geral[1,1])
-          tabela[i,ncol(tabela)] <- (tabela[i,ncol(tabela)]/tot.geral[1,2])
+        for (i in 3:ncol(tabela)) {
+          tot.geral[1,i] <- sum(tabela[,i])
         }
 
-        rm(tot.geral)
-        gc()
+        for (k in 3:ncol(tabela)) {
+          for (i in 1:nrow(tabela)) {
+            tabela[i, k] <- (tabela[i, k]/tot.geral[1,k])
+          }
+        }
 
         tabela <- as.data.frame(c(tabela[fil[2]], tabela[var[2]], tabela[classifier]))
 
